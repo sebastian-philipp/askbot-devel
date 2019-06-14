@@ -1,0 +1,11 @@
+* is_usable attribute on template loaders is removed >askbot/skins/askbot_environments.pyi
+  no replacement
+* It would appear we rely on DjangoTemplates to load stuff drom templatetags.
+  Us loading jinja2 extentions/filters through Django Templates is a bit bad.
+* load_temple() and load_template_sources() have been deprecated! (no action needed after rip_coffin)
+* something changed about urls and urlpatterns which probably hits us
+* The LOGOUT_URL setting is removed as Django hasn’t made use of it since pre-1.0. If you use it in your project, you can add it to your project’s settings. The default value was '/accounts/logout/'.
+
+potential root causes ...
+* ResolverMatch.app_name was changed to contain the full namespace path in the case of nested namespaces  can become problematic
+* XML serialization (either through dumpdata or the syndication framework) used to output any characters it received. Now if the content to be serialized contains any control characters not allowed in the XML 1.0 standard, the serialization will fail with a ValueError.
