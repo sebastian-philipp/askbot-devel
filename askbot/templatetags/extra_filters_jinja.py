@@ -5,7 +5,7 @@ import time
 import urllib.request, urllib.parse, urllib.error
 from bs4 import BeautifulSoup
 from django.core import exceptions as django_exceptions
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.utils.translation import get_language as django_get_language
 from django.contrib.humanize.templatetags import humanize
@@ -393,7 +393,7 @@ def sub_vars(text, user=None):
     sitename_re = re.compile(r'\{\{\s*SITE_NAME\s*\}\}')
     sitelink_re = re.compile(r'\{\{\s*SITE_LINK\s*\}\}')
 
-    text = force_unicode(text)
+    text = force_text(text)
 
     if user:
         if user.is_anonymous():
