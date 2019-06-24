@@ -42,7 +42,6 @@ REQUIREMENTS = {
     'cas': 'python-cas==1.4.0',
     'responses': 'responses>=0.9.0',
     'requirements': 'requirements-parser==0.2.0',
-    'robots': 'django-robots==1.1',
     'robots': 'django-robots==3.0',
     'regex': 'regex',
     'sanction': 'sanction==0.3.1',
@@ -50,7 +49,6 @@ REQUIREMENTS = {
     'six': 'six==1.10.0',
     'tinymce': 'django-tinymce>=2.8.0',
     'unidecode': 'unidecode<=1.0.23',
-    #'stopforumspam': 'stopforumspam'
 }
 
 #necessary for interoperability of django and coffin
