@@ -2,7 +2,8 @@
 {% block title %}{% trans title=email.title %}Preview of email "{{ title }}"{% endtrans %}{% endblock %}
 {% block content %}
     <ol class="breadcrumb">
-        <li><a href="{% url "list_emails" %}">{% trans %}Askbot emails{% endtrans %}:</a></li>
+        <li><a href="{{ url('list_emails') }}">{% trans %}Askbot emails{% endtrans %}:</a></li>
+        <li><a href="{{ url('list_emails') }}">{% trans %}Askbot emails{% endtrans %}:</a></li>
         <li>{{ email.title }}</li>
     </ol>
     <h1>{% trans title=email.title %}Preview of email "{{ title }}"{% endtrans %}</h1>

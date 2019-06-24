@@ -14,7 +14,8 @@
                     {% if support_custom_avatars %}
                         href="{% url askbot_avatar_show_list view_user.id %}"
                     {% else %}
-                        href="{% url faq %}#gravatar"
+                        href="{{ url('faq') }}#gravatar"
+                        href="{{ url('faq') }}#gravatar"
                     {% endif %}
                 >{% trans %}change picture{% endtrans %}</a></p>
             {% endif %}
@@ -159,8 +160,10 @@
             <div class="js-editable"
                 id="js-user-about-{{ view_user.pk}}"
                 {# urls below are parsed and parameters added as part of request #}
-                data-get-text-url="{% url get_user_description %}?user_id={{ view_user.pk }}"
-                data-save-text-url="{% url set_user_description %}?user_id={{ view_user.pk }}"
+                data-get-text-url="{{ url('get_user_description') }}?user_id={{ view_user.pk }}"
+                data-get-text-url="{{ url('get_user_description') }}?user_id={{ view_user.pk }}"
+                data-save-text-url="{{ url('set_user_description') }}?user_id={{ view_user.pk }}"
+                data-save-text-url="{{ url('set_user_description') }}?user_id={{ view_user.pk }}"
                 data-save-text-param-name="description"
                 data-validated-text-param-name="description_html"
                 data-editor-type="{{ settings.EDITOR_TYPE }}"

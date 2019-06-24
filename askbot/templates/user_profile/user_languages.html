@@ -5,7 +5,7 @@
 {% block usercontent %}
     <form
         method="post" 
-        action="{% url user_select_languages view_user.id, view_user.username|slugify %}"
+        action="{{ url('user_select_languages', view_user.id,  slugify(view_user.username) }}"
     >{% csrf_token %}
         <div class="user-lang-selector">
             {% if settings.LANGUAGE_MODE == 'user-lang' %}
