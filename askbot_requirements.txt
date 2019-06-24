@@ -8,8 +8,8 @@ django-celery>=3.0.11,<=3.3.0
 django-compressor>=2.0,<=2.2
 celery==3.1.18
 django-countries>=3.3
-django-followit>=0.3.0
-django-keyedcache>=1.5.1
+-e git+https://github.com/martin-bts/django-followit.git#egg=django-followit
+-e hg+https://bitbucket.org/bkroeze/django-keyedcache#egg=django-keyedcache
 django-jinja==2.4.1
 django-kombu==0.9.4
 django-picklefield==1.0.0
