@@ -12,7 +12,8 @@
         data-on-prompt-text="{% trans %}Follow{% endtrans %}"
         data-on-state-text="{% trans %}Following{% endtrans %}"
         data-off-state-text="{% trans %}Follow{% endtrans %}"
-        data-toggle-url="{% url 'toggle_follow_question' %}"
+        data-toggle-url="{{ url('toggle_follow_question') }}"
+        data-toggle-url="{{ url('toggle_follow_question') }}"
     >
         {% if favorited %}
             {% trans %}Following{% endtrans %}
@@ -31,7 +32,7 @@
         {% if settings.RSS_ENABLED %}
         <p class="rss">
             <a
-                href="{% url 'individual_question_feed' question.id %}"
+                href="{{ url(''individual_question_feed'',  question.id ) }}"
                 title="{% trans %}subscribe to the rss feed{% endtrans %}"
                 >{% trans %}subscribe to rss feed{% endtrans %}</a>
         </p>
@@ -45,19 +46,22 @@
     {% if thread.is_private() %}
         <h2>{% trans %}Invite{% endtrans %}</h2>
         <p style="margin: 16px 0">{{ settings.WORDS_INVITE_OTHERS_TO_HELP_ANSWER_THIS_QUESTION|escape }}</p>
-        <form action="{% url share_question_with_user %}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_user') }}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_user') }}" method="post">{% csrf_token %}
             <input id="share_user_name" type="text" class="groups-input" name="recipient_name" />
             <input type="hidden" name="thread_id" value="{{ thread.id }}"/>
             <input type="submit" class="add-groups" value="{% trans %}add{% endtrans %}"/>
         </form>
         <p class="share-input-col">{% trans %}- or -{% endtrans %}</p>
-        <form action="{% url share_question_with_group %}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_group') }}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_group') }}" method="post">{% csrf_token %}
             <input id="share_group_name" type="text" class="groups-input" name="recipient_name" />
             <input type="hidden" name="thread_id" value="{{ thread.id }}"/>
             <input type="submit" class="add-groups" value="{% trans %}add{% endtrans %}"/>
         </form>
         <p class="share-input-col">{% trans %}- or -{% endtrans %}</p>
-        <form action="{% url share_question_with_group %}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_group') }}" method="post">{% csrf_token %}
+        <form action="{{ url('share_question_with_group') }}" method="post">{% csrf_token %}
             <input
                 type="hidden"
                 name="recipient_name"
@@ -96,7 +100,8 @@
                 {% trans %}and{% endtrans %}
                 <a 
                     class="see-related-users"
-                    data-url="{% url get_thread_shared_users %}"
+                    data-url="{{ url('get_thread_shared_users') }}"
+                    data-url="{{ url('get_thread_shared_users') }}"
                     data-thread-id="{{ thread.id }}"
                 >{% trans 
                         more_count=sharing_info['more_users_count'] 
@@ -116,7 +121,8 @@
                     {% trans %}and{% endtrans %}
                     <a 
                         class="see-related-groups"
-                        data-url="{% url get_thread_shared_groups %}"
+                        data-url="{{ url('get_thread_shared_groups') }}"
+                        data-url="{{ url('get_thread_shared_groups') }}"
                         data-thread-id="{{ thread.id }}"
                     >{% trans more_count=sharing_info['more_groups_count'] %}{{ more_count }} more{% endtrans %}
                     </a>

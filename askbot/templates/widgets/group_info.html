@@ -40,7 +40,8 @@
             <input type="checkbox"
                 id="moderate-email"
                 {% if group.moderate_email %}checked="checked"{% endif %}
-                data-toggle-url="{% url toggle_group_profile_property %}"
+                data-toggle-url="{{ url('toggle_group_profile_property') }}"
+                data-toggle-url="{{ url('toggle_group_profile_property') }}"
             />
             <label for="moderate-email">
                 {% trans %}moderate emailed content{% endtrans %}
@@ -52,7 +53,8 @@
             type="checkbox"
             id="moderate-answers-to-enquirers"
             {% if group.moderate_answers_to_enquirers %}checked="checked"{% endif %}
-            data-toggle-url="{% url toggle_group_profile_property %}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
         />
         <label for="moderate-answers-to-enquirers">
             {{ settings.WORDS_SHOW_ONLY_SELECTED_ANSWERS_TO_ENQUIRERS|escape }}
@@ -65,7 +67,8 @@
         <br/>
         <select 
             id="group-openness-selector"
-            data-url="{% url set_group_openness %}"
+            data-url="{{ url('set_group_openness') }}"
+            data-url="{{ url('set_group_openness') }}"
         >
             {% for choice in group_openness_choices %}
             <option 
@@ -79,7 +82,8 @@
         <br/>
         <input type="checkbox" id="vip-toggle"
             {% if group.is_vip %}checked="checked"{% endif %}
-            data-toggle-url="{% url toggle_group_profile_property %}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
         />
         <label for="vip-toggle">
             {% trans %}Can moderate site{% endtrans %}
@@ -89,7 +93,8 @@
             type="checkbox"
             id="read-only-toggle"
             {% if group.read_only %}checked="checked"{% endif %}
-            data-toggle-url="{% url toggle_group_profile_property %}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
+            data-toggle-url="{{ url('toggle_group_profile_property') }}"
         />
         <label for="read-only-toggle">
             {% trans %}Allow only read access{% endtrans %}
@@ -100,7 +105,8 @@
             data-object-id="{{group.group_ptr_id}}"
             data-model-name="Group"
             data-property-name="preapproved_emails"
-            data-url="{% url edit_object_property_text %}"
+            data-url="{{ url('edit_object_property_text') }}"
+            data-url="{{ url('edit_object_property_text') }}"
             data-editor-heading="{% trans %}List of preapproved email addresses{% endtrans %}"
             data-help-text="{% trans %}Users with these email adderesses will be added to the group automatically.{% endtrans %}"
         >{% trans %}edit preapproved emails{% endtrans %}</a>
@@ -110,7 +116,8 @@
             data-object-id="{{group.group_ptr_id}}"
             data-model-name="Group"
             data-property-name="preapproved_email_domains"
-            data-url="{% url edit_object_property_text %}"
+            data-url="{{ url('edit_object_property_text') }}"
+            data-url="{{ url('edit_object_property_text') }}"
             data-editor-heading="{% trans %}List of preapproved email domain names{% endtrans %}"
             data-help-text="{% trans %}Users whose email adderesses belong to these domains will be added to the group automatically.{% endtrans %}"
         >{% trans %}edit preapproved email domains{% endtrans %}</a>
