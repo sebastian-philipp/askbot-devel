@@ -1,5 +1,5 @@
 <span class="action-link">
-    <a id="js-edit-btn-post-body-{{ answer.pk }}" class="question-edit js-edit" href="{% url edit_answer answer.id %}">{% trans %}edit{% endtrans %}</a>
+    <a id="js-edit-btn-post-body-{{ answer.pk }}" class="question-edit js-edit" href="{{ url('edit_answer',  answer.id ) }}">{% trans %}edit{% endtrans %}</a>
 </span>
 {% if answer.offensive_flag_count > 0 %}
 <span 

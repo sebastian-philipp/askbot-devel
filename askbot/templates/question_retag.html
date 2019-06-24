@@ -3,7 +3,7 @@
 {% block title %}{% spaceless %}{{ settings.WORDS_RETAG_QUESTION|escape }}{% endspaceless %}{% endblock %}
 {% block content %}
 <h1>{{ settings.WORDS_RETAG_QUESTION|escape }} [<a href="{{ question.get_absolute_url() }}">{% trans %}back{% endtrans %}</a>]</h1>
-<form id="fmretag" action="{% url retag_question question.id %}" method="post" >{% csrf_token %}
+<form id="fmretag" action="{{ url('retag_question',  question.id ) }}" method="post" >{% csrf_token %}
     <h2>
         {{ question.thread.get_title()|escape }}
     </h2>

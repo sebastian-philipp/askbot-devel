@@ -121,9 +121,9 @@
     <p style="line-height:12px;">
         <a 
         {% if revision.post.post_type == 'question' %}
-            href="{% url question_revisions revision.post.id %}"
+            href="{{ url('question_revisions',  revision.post.id ) }}"
         {% else %}
-            href="{% url answer_revisions revision.post.id %}"
+            href="{{ url('answer_revisions',  revision.post.id ) }}"
         {% endif %}
         ><strong>{{ timeago(revision.revised_at, action_performed=action_label) }}</strong></a>
     </p>

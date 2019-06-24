@@ -33,7 +33,7 @@
             {% set comma=joiner(',') %}
             <td>{%for user in subscription.users.all() %}{{ comma() }}
                 <a
-                    href='{{ url('user_profile', user.id,  slugify(user.username) }}'
+                    href='{{ url('user_profile', user.id,  user.username|slugify }}'
                 >{{user.username}}</a>{%endfor%} <a href='#'>
             </td>
             {% if settings.GROUPS_ENABLED %}
@@ -41,13 +41,13 @@
             <td>
                 {% for group in subscription.groups.all() %}{{ comma() }}
                     <a
-                        href='{{ url('users_by_group', group.id,  slugify(group.name) }}'
+                        href='{{ url('users_by_group', group.id,  group.name|slugify }}'
                     >{{group.name}}</a>{%endfor%}
             </td>
             {% endif %}
             <td>
                 <button type="button">
-                    <a class='action' href='{% url edit_bulk_tag_subscription subscription.id %}'>{% trans %}Edit{% endtrans %}</a>
+                    <a class='action' href='{{ url('edit_bulk_tag_subscription',  subscription.id ) }}'>{% trans %}Edit{% endtrans %}</a>
                 </button>
                 <form action="{{ url('delete_bulk_tag_subscription') }}" method="POST" accept-charset="utf-8">
                 <form action="{{ url('delete_bulk_tag_subscription') }}" method="POST" accept-charset="utf-8">

@@ -32,7 +32,7 @@
         {% if settings.RSS_ENABLED %}
         <p class="rss">
             <a
-                href="{% url 'individual_question_feed' question.id %}"
+                href="{{ url(''individual_question_feed'',  question.id ) }}"
                 title="{% trans %}subscribe to the rss feed{% endtrans %}"
                 >{% trans %}subscribe to rss feed{% endtrans %}</a>
         </p>

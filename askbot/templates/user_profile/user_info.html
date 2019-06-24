@@ -12,7 +12,7 @@
             {% if request.user.pk == view_user.pk %}
                 <p><a 
                     {% if support_custom_avatars %}
-                        href="{% url askbot_avatar_show_list view_user.id %}"
+                        href="{{ url('askbot_avatar_show_list',  view_user.id ) }}"
                     {% else %}
                         href="{{ url('faq') }}#gravatar"
                         href="{{ url('faq') }}#gravatar"
@@ -54,7 +54,7 @@
             {% if request.user.is_authenticated() and (request.user.pk == view_user.pk or request.user.is_administrator_or_moderator()) %}
             <tr>
                 <td class="user-profile-tool-links" align="left" colspan="2">
-                    <a href="{% url edit_user view_user.id %}">
+                    <a href="{{ url('edit_user',  view_user.id ) }}">
                         {% trans %}update profile{% endtrans %}
                     </a>
                     {% if settings.USE_ASKBOT_LOGIN_SYSTEM and request.user.pk == view_user.pk and settings.ALLOW_ADD_REMOVE_LOGIN_METHODS %}
