@@ -33,7 +33,7 @@
             {% set comma=joiner(',') %}
             <td>{%for user in subscription.users.all() %}{{ comma() }}
                 <a
-                    href='{{ url('user_profile', user.id,  user.username|slugify }}'
+                    href='{{ url('user_profile', user.id,  user.username|slugify) }}'
                 >{{user.username}}</a>{%endfor%} <a href='#'>
             </td>
             {% if settings.GROUPS_ENABLED %}
@@ -41,7 +41,7 @@
             <td>
                 {% for group in subscription.groups.all() %}{{ comma() }}
                     <a
-                        href='{{ url('users_by_group', group.id,  group.name|slugify }}'
+                        href='{{ url('users_by_group', group.id,  group.name|slugify) }}'
                     >{{group.name}}</a>{%endfor%}
             </td>
             {% endif %}
