@@ -101,7 +101,7 @@ class PostQuerySet(models.query.QuerySet):
     def get_for_user(self, user):
         from askbot.models.user import Group
         if askbot_settings.GROUPS_ENABLED:
-            if user is None or user.is_anonymous():
+            if user is None or user.is_anonymous:
                 groups = [Group.objects.get_global_group()]
             else:
                 groups = user.get_groups()
@@ -303,7 +303,7 @@ class PostManager(BaseQuerySetManager):
 
         comments_reversed = askbot_settings.COMMENTS_REVERSED
 
-        if visitor.is_anonymous():
+        if visitor.is_anonymous:
             if comments_reversed:
                 comments = list(qs.order_by('-added_at'))
             else:
@@ -325,7 +325,7 @@ class PostManager(BaseQuerySetManager):
             post.set_cached_comments(post_map[post.id])
 
         # Old Post.get_comment(self, visitor=None) method:
-        #        if visitor.is_anonymous():
+        #        if visitor.is_anonymous:
         #            return self.comments.order_by('added_at')
         #        else:
         #            upvoted_by_user = list(self.comments.filter(votes__user=visitor).distinct())
@@ -1690,7 +1690,7 @@ class Post(models.Model):
         if not self.is_answer():
             raise NotImplementedError
 
-        if user.is_anonymous():
+        if user.is_anonymous:
             return None
 
         votes = self.votes.filter(user=user)
@@ -1706,7 +1706,7 @@ class Post(models.Model):
                 raise exceptions.QuestionHidden(_('Sorry, this content is not available'))
         if self.deleted:
             message = _('Sorry, this content is no longer available')
-            if user.is_anonymous():
+            if user.is_anonymous:
                 raise exceptions.QuestionHidden(message)
             try:
                 user.assert_can_see_deleted_post(self)
@@ -1722,7 +1722,7 @@ class Post(models.Model):
             raise exceptions.QuestionHidden(message)
         if self.deleted:
             message = _('Sorry, this content is no longer available')
-            if user.is_anonymous():
+            if user.is_anonymous:
                 raise exceptions.AnswerHidden(message)
             try:
                 user.assert_can_see_deleted_post(self)
@@ -1757,7 +1757,7 @@ class Post(models.Model):
             raise NotImplementedError
 
         message = _('This post is temporarily not available')
-        if user.is_anonymous():
+        if user.is_anonymous:
             raise exception(message)
         else:
             user_groups_ids = user.get_groups().values_list('id', flat=True)
