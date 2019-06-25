@@ -25,6 +25,7 @@ import logging
 from django.conf import settings as django_settings
 from django.core.cache import cache
 from django.contrib.sites.models import Site
+from django.core.files import uploadedfile
 from django.utils.encoding import force_text
 from django.utils.functional import lazy
 from django.utils.translation import get_language
@@ -90,7 +91,7 @@ class ConfigSettings(object):
         """returns setting to the default value"""
         self.update(key, self.get_default(key))
 
-    def update(self, key, value, language_code=None):
+    def update(self, key, value: uploadedfile.UploadedFile, language_code=None):
         try:
             setting = config_get(self.__group_map[key], key)
             if setting.localized:
