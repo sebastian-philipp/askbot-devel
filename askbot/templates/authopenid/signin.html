@@ -56,14 +56,14 @@
                 major_login_providers = major_login_providers,
                 minor_login_providers = minor_login_providers,
                 settings = settings,
-                logged_in = user.is_authenticated(),
+                logged_in = user.is_authenticated,
                 show_buttons = have_buttons
             )
         }}
           {% if use_password_login == True %}
         <fieldset id="password-fs">
             {{login_form.password_action}}
-            {% if user.is_anonymous() or settings.USE_LDAP_FOR_PASSWORD_LOGIN %}
+            {% if user.is_anonymous or settings.USE_LDAP_FOR_PASSWORD_LOGIN %}
                 {% if have_buttons %}
                     <h2 id="password-heading">
                         {% trans %}or enter your <span>user name and password</span>{% endtrans %}
@@ -78,7 +78,7 @@
                         <p class="error">{% trans %}Login failed, please try again{% endtrans %}</p>
                     {% endif %}
                     <div class="form-group">
-                        <input class="required login" id="id_username" 
+                        <input class="required login" id="id_username"
                             maxlength="255" name="username" type="text"
                             {% if login_form.username.value() %}
                                 value="{{ login_form.username.value()|escape }}"
@@ -91,7 +91,7 @@
                         >
                     </div>
                     <div class="form-group">
-                        <input class="required login" id="id_password" 
+                        <input class="required login" id="id_password"
                             maxlength="128" name="password" type="password"
                             {% if login_form.password.value() %}
                                 value="{{ login_form.password.value()|escape }}"
@@ -113,7 +113,7 @@
                 <div class="login">
                     <div class="form-group js-new_password">
                         <span class="error form-error">{{login_form.new_password.errors[0]}}</span>
-                        <input class="required login" id="id_new_password" 
+                        <input class="required login" id="id_new_password"
                             maxlength="128" name="new_password" type="password"
                             {% if login_form.new_password.value() %}
                                 value="{{ login_form.new_password.value()|escape }}"
@@ -123,7 +123,7 @@
                     </div>
                     <div class="form-group js-new_password_retyped">
                         <span class="error form-error">{{login_form.new_password_retyped.errors[0]}}</span>
-                        <input class="required login" id="id_new_password_retyped" maxlength="128" 
+                        <input class="required login" id="id_new_password_retyped" maxlength="128"
                             name="new_password_retyped" type="password"
                             {% if login_form.new_password_retyped.value() %}
                                 value="{{ login_form.new_password_retyped.value()|escape }}"
@@ -139,7 +139,7 @@
         </fieldset>
         {% endif %}
     </form>
-    {% if user.is_authenticated() and existing_login_methods and settings.ALLOW_ADD_REMOVE_LOGIN_METHODS %}
+    {% if user.is_authenticated and existing_login_methods and settings.ALLOW_ADD_REMOVE_LOGIN_METHODS %}
     <div
         id='existing-login-methods'
         {% if login_form.password_change_failed %}
@@ -178,7 +178,7 @@
     {% endif %}
     {% endif %}
     {% if view_subtype != 'email_sent' %}
-        {% if user.is_anonymous() and settings.ALLOW_ACCOUNT_RECOVERY_BY_EMAIL %}
+        {% if user.is_anonymous and settings.ALLOW_ACCOUNT_RECOVERY_BY_EMAIL %}
         <form id="account-recovery-form" action="{{ url('user_account_recover') }}" method="post">{% csrf_token %}
         <form id="account-recovery-form" action="{{ url('user_account_recover') }}" method="post">{% csrf_token %}
             <h2 id='account-recovery-heading'>{% trans %}Having trouble signing in?{% endtrans %}</h2>
