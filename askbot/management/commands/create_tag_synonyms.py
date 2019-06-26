@@ -52,7 +52,7 @@ remove source_tag"""
         parser.add_argument('--is_force',
                             action='store_true',
                             dest='is_force',
-                            default=False
+                            default=False,
                             help='force the issue'
                            )
 
