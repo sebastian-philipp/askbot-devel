@@ -10,11 +10,10 @@
         <div class='avatar'>
             {{ macros.gravatar(view_user, 128) }}
             {% if request.user.pk == view_user.pk %}
-                <p><a 
+                <p><a
                     {% if support_custom_avatars %}
                         href="{{ url('askbot_avatar_show_list',  view_user.id ) }}"
                     {% else %}
-                        href="{{ url('faq') }}#gravatar"
                         href="{{ url('faq') }}#gravatar"
                     {% endif %}
                 >{% trans %}change picture{% endtrans %}</a></p>
@@ -63,7 +62,7 @@
                         </a>
                     {% endif %}
                 </td>
-            </tr>  
+            </tr>
             {% endif %}
             <tr>
                 <th colspan="2" align="left">
@@ -121,10 +120,10 @@
                     }}</td>
             </tr>
             {% endif  %}
-            {% if request.user == view_user and 
-                settings.TWITTER_SECRET and 
-                settings.TWITTER_KEY and 
-                settings.ENABLE_SHARING_TWITTER 
+            {% if request.user == view_user and
+                settings.TWITTER_SECRET and
+                settings.TWITTER_KEY and
+                settings.ENABLE_SHARING_TWITTER
             %}
                 {% include "user_profile/twitter_sharing_controls.html" %}
             {% endif %}
@@ -161,8 +160,6 @@
                 id="js-user-about-{{ view_user.pk}}"
                 {# urls below are parsed and parameters added as part of request #}
                 data-get-text-url="{{ url('get_user_description') }}?user_id={{ view_user.pk }}"
-                data-get-text-url="{{ url('get_user_description') }}?user_id={{ view_user.pk }}"
-                data-save-text-url="{{ url('set_user_description') }}?user_id={{ view_user.pk }}"
                 data-save-text-url="{{ url('set_user_description') }}?user_id={{ view_user.pk }}"
                 data-save-text-param-name="description"
                 data-validated-text-param-name="description_html"

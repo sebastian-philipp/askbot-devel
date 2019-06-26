@@ -73,8 +73,6 @@
     <script type="text/javascript">
         (function() {
             askbot['urls']['save_post_reject_reason'] = '{{ url('save_post_reject_reason') }}';
-            askbot['urls']['save_post_reject_reason'] = '{{ url('save_post_reject_reason') }}';
-            askbot['urls']['delete_post_reject_reason'] = '{{ url('delete_post_reject_reason') }}';
             askbot['urls']['delete_post_reject_reason'] = '{{ url('delete_post_reject_reason') }}';
             {% if request.user.is_administrator_or_moderator() %}
                 askbot['data']['postRejectReasons'] = [
@@ -83,7 +81,6 @@
                     {% endfor %}
                 ];
             {% endif %}
-            askbot['urls']['moderatePostEdits'] = '{{ url('moderate_post_edits') }}';
             askbot['urls']['moderatePostEdits'] = '{{ url('moderate_post_edits') }}';
             var modControls = new PostModerationControls();
             modControls.decorate($('body'));

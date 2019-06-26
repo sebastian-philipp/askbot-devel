@@ -25,12 +25,8 @@
         askbot['data']['viewUserId'] = {{ view_user.id }};
         askbot['data']['isExportingData'] = {{ exporting|as_js_bool }};
         askbot['urls']['edit_group_membership'] = '{{ url('edit_group_membership') }}';
-        askbot['urls']['edit_group_membership'] = '{{ url('edit_group_membership') }}';
-        askbot['urls']['getGroupsList'] = '{{ url('get_groups_list') }}';
         askbot['urls']['getGroupsList'] = '{{ url('get_groups_list') }}';
         askbot['urls']['getTopAnswers'] = '{{ url('get_top_answers') }}';
-        askbot['urls']['getTopAnswers'] = '{{ url('get_top_answers') }}';
-        askbot['urls']['upload'] = '{{ url('upload') }}';
         askbot['urls']['upload'] = '{{ url('upload') }}';
         askbot['urls']['getTodaysBackupFileName'] = '{{ url('get_todays_backup_file_name',  view_user.pk ) }}';
         askbot['urls']['downloadUserData'] = '{{ url('download_user_data',  view_user.pk, "file_name" ) }}';
