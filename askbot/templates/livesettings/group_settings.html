@@ -10,8 +10,8 @@
     </p>
 {% endif %}
 {% if form.fields %}
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table 
+<form method="post" enctype="multipart/form-data">{{ csrf_input }}
+    <table
         class="settings"
         summary="{% trans name = settings_group.name %}Settings included in {{ name }}.{% endtrans %}"
     >
