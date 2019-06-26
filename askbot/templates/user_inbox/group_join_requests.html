@@ -7,7 +7,7 @@
     <table>
     {% for join_request in join_requests %}
         <tr>
-            <td>{% trans 
+            <td>{% trans
                     user=join_request.user,
                     group=groups_dict[join_request.object_id].name
                 %}{{ user }} wants to join group {{ group }}{% endtrans %}
@@ -15,8 +15,8 @@
             <td>{# forms with accept and reject buttons #}
                 <form action="{{ url('moderate_group_join_request') }}" method="post"
                 <form action="{{ url('moderate_group_join_request') }}" method="post"
-                >{% csrf_token %}
-                    <input 
+                >{{ csrf_input }}
+                    <input
                         type="hidden"
                         name="request_id"
                         value="{{join_request.id}}"
@@ -31,8 +31,8 @@
             <td>
                 <form action="{{ url('moderate_group_join_request') }}" method="post">
                 <form action="{{ url('moderate_group_join_request') }}" method="post">
-                    {% csrf_token %}
-                    <input 
+                    {{ csrf_input }}
+                    <input
                         type="hidden"
                         name="request_id"
                         value="{{join_request.id}}"
