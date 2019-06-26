@@ -4,7 +4,7 @@ URL. The canonical way to enable cache middleware is to set
 ``UpdateCacheMiddleware`` as your first piece of middleware, and
 ``FetchFromCacheMiddleware`` as the last::
 
-    MIDDLEWARE_CLASSES = [
+    MIDDLEWARE = [
         'django.middleware.cache.UpdateCacheMiddleware',
         ...
         'django.middleware.cache.FetchFromCacheMiddleware'
@@ -56,7 +56,7 @@ class UpdateCacheMiddleware(object):
 
     Must be used as part of the two-part update/fetch cache middleware.
     UpdateCacheMiddleware must be the first piece of middleware in
-    MIDDLEWARE_CLASSES so that it'll get called last during the response phase.
+    MIDDLEWARE so that it'll get called last during the response phase.
     """
     def __init__(self):
         self.cache_timeout = settings.CACHE_MIDDLEWARE_SECONDS
@@ -78,7 +78,7 @@ class UpdateCacheMiddleware(object):
         # cause it to be accessed here. If it hasn't been accessed, then the
         # user's logged-in status has not affected the response anyway.
         if self.cache_anonymous_only and self._session_accessed(request):
-            assert hasattr(request, 'user'), "The Django cache middleware with CACHE_MIDDLEWARE_ANONYMOUS_ONLY=True requires authentication middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.auth.middleware.AuthenticationMiddleware' before the CacheMiddleware."
+            assert hasattr(request, 'user'), "The Django cache middleware with CACHE_MIDDLEWARE_ANONYMOUS_ONLY=True requires authentication middleware to be installed. Edit your MIDDLEWARE setting to insert 'django.contrib.auth.middleware.AuthenticationMiddleware' before the CacheMiddleware."
             if request.user.is_authenticated:
                 # Don't cache user-variable requests from authenticated users.
                 return False
@@ -125,7 +125,7 @@ class FetchFromCacheMiddleware(object):
 
     Must be used as part of the two-part update/fetch cache middleware.
     FetchFromCacheMiddleware must be the last piece of middleware in
-    MIDDLEWARE_CLASSES so that it'll get called last during the request phase.
+    MIDDLEWARE so that it'll get called last during the request phase.
     """
     def __init__(self):
         self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX

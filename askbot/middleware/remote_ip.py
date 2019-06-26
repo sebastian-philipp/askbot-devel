@@ -3,7 +3,7 @@ based on the HTTP_X_FORWARDED_FOR value, if used.
 Enable this middleware if using django site behind a proxy
 server or a load balancer.
 
-Add to the MIDDLEWARE_CLASSES:
+Add to the MIDDLEWARE:
 
     'askbot.middleware.remote_ip.SetRemoteIPFromXForwardedFor',
 """
