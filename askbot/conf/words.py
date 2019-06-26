@@ -91,7 +91,7 @@ settings.register(
 settings.register(
     values.LongStringValue(
         WORDS,
-        'WORDS_INSTRUCTION_TO_GIVE_ANSWERS',
+        'WORDS_INSTRUCTION_TO_GIVE_ANSWER',
         default=_(
             'This space is reserved only for answers. '
             'If you would like to engage in a discussion, '
