@@ -9,6 +9,16 @@ Add to the MIDDLEWARE:
 """
 
 class SetRemoteIPFromXForwardedFor(object):
+    def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think
+        if get_response is None:
+            get_response = lambda x:x
+        self.get_response = get_response
+
+    def __call__(self, request):
+        self.process_request(request)
+        response = self.get_response(request) # i think this simply chains all middleware
+        return response
+
     def process_request(self, request):
         try:
             real_ip = request.META['HTTP_X_FORWARDED_FOR']

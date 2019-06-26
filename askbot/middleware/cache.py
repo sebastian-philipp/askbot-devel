@@ -58,12 +58,20 @@ class UpdateCacheMiddleware(object):
     UpdateCacheMiddleware must be the first piece of middleware in
     MIDDLEWARE so that it'll get called last during the response phase.
     """
-    def __init__(self):
+    def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think
+        if get_response is None:
+            get_response = lambda x:x
+        self.get_response = get_response
         self.cache_timeout = settings.CACHE_MIDDLEWARE_SECONDS
         self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
         self.cache_anonymous_only = getattr(settings, 'CACHE_MIDDLEWARE_ANONYMOUS_ONLY', False)
         self.cache_alias = settings.CACHE_MIDDLEWARE_ALIAS
         self.cache = caches[self.cache_alias]
+
+    def __call__(self, request):
+        response = self.get_response(request) # i think this simply chains all middleware
+        response = self.process_response(request, response)
+        return response
 
     def _session_accessed(self, request):
         try:
@@ -127,10 +135,19 @@ class FetchFromCacheMiddleware(object):
     FetchFromCacheMiddleware must be the last piece of middleware in
     MIDDLEWARE so that it'll get called last during the request phase.
     """
-    def __init__(self):
+    def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think
+        if get_response is None:
+            get_response = lambda x:x
+        self.get_response = get_response
         self.key_prefix = settings.CACHE_MIDDLEWARE_KEY_PREFIX
         self.cache_alias = settings.CACHE_MIDDLEWARE_ALIAS
         self.cache = caches[self.cache_alias]
+
+    def __call__(self, request):
+        response = self.process_request(request)
+        if response is None:
+            response = self.get_response(request) # i think this simply chains all middleware
+        return response
 
     def process_request(self, request):
         """
@@ -168,11 +185,14 @@ class CacheMiddleware(UpdateCacheMiddleware, FetchFromCacheMiddleware):
     Also used as the hook point for the cache decorator, which is generated
     using the decorator-from-middleware utility.
     """
-    def __init__(self, cache_timeout=None, cache_anonymous_only=None, **kwargs):
+    def __init__(self, get_response=None, cache_timeout=None, cache_anonymous_only=None, **kwargs):
         # We need to differentiate between "provided, but using default value",
         # and "not provided". If the value is provided using a default, then
         # we fall back to system defaults. If it is not provided at all,
         # we need to use middleware defaults.
+        if get_response is None:
+            get_response = lambda x:x
+        self.get_response = get_response
 
         try:
             key_prefix = kwargs['key_prefix']
@@ -199,3 +219,11 @@ class CacheMiddleware(UpdateCacheMiddleware, FetchFromCacheMiddleware):
         self.cache_anonymous_only = cache_anonymous_only
 
         self.cache = caches[self.cache_alias]
+
+    def __call__(self, request):
+        response = self.process_request(request)
+        if response is not None:
+            return response
+        response = self.get_response(request) # i think this simply chains all middleware
+        response = self.process_response(request, response)
+        return response
