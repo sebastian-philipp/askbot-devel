@@ -103,6 +103,7 @@ TEMPLATES = (
 )
 
 MIDDLEWARE = (
+    'django.middleware.csrf.CsrfViewMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -122,7 +123,6 @@ MIDDLEWARE = (
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'askbot.middleware.view_log.ViewLogMiddleware',
     'askbot.middleware.spaceless.SpacelessMiddleware',
-    'askbot.middleware.csrf.CsrfViewMiddleware',
 )
 
 ATOMIC_REQUESTS = True
@@ -170,7 +170,6 @@ INSTALLED_APPS = (
     'askbot',
     'askbot.deps.django_authopenid',
     #'askbot.importers.stackexchange', #se loader
-    #'askbot.deps.livesettings',
     'livesettings',
     'keyedcache',
     'robots',
