@@ -4,6 +4,7 @@ import logging
 import askbot
 import site
 import sys
+import dj_database_url
 from jinja2.runtime import Undefined
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
@@ -12,7 +13,7 @@ ASKBOT_ROOT  = os.path.abspath(os.path.dirname(askbot.__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
 
-DEBUG          = True   # set to True to enable debugging
+DEBUG          = False   # set to True to enable debugging
 TEMPLATE_DEBUG = False  # keep false when debugging jinja2 templates
 INTERNAL_IPS   = ('127.0.0.1',)
 ALLOWED_HOSTS  = ['*',] #change this for better security on your site
@@ -23,22 +24,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.{{database_engine}}', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '{{database_name}}',                      # Or path to database file if using sqlite3.
-        'USER': '{{database_user}}',                      # Not used with sqlite3.
-        'PASSWORD': '{{database_password}}',                  # Not used with sqlite3.
-        'HOST': '{{database_host}}',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '{{database_port}}',                      # Set to empty string for default. Not used with sqlite3.
-        'TEST': {
-            'CHARSET': 'utf8',              # Setting the character set and collation to utf-8
-         {% if 'mysql' in database_engine %}
-            'COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
-         {% endif %}
-        }
+db_url = dj_database_url.config()
+DATABASE_DEFAULT = {
+    'ENGINE': 'django.db.backends.{{database_engine}}', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    'NAME': '{{database_name}}',                      # Or path to database file if using sqlite3.
+    'USER': '{{database_user}}',                      # Not used with sqlite3.
+    'PASSWORD': '{{database_password}}',                  # Not used with sqlite3.
+    'HOST': '{{database_host}}',                      # Set to empty string for localhost. Not used with sqlite3.
+    'PORT': '{{database_port}}',                      # Set to empty string for default. Not used with sqlite3.
+    'TEST': {
+        'CHARSET': 'utf8',              # Setting the character set and collation to utf-8
+     {% if 'mysql' in database_engine %}
+        'COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
+     {% endif %}
     }
 }
+DATABASES = {'default': db_url if db_url else DATABASE_DEFAULT}
 
 #outgoing mail server settings
 SERVER_EMAIL         = ''
@@ -82,8 +83,11 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')#path to files collected by co
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Make up some unique string, and don't share it with anybody.
-SECRET_KEY = '{{secret_key}}'
-
+{% if secret_key != '' %}
+SECRET_KEY = '{{ secret_key }}'
+{% else %}
+SECRET_KEY = os.environ['SECRET_KEY']
+{% endif %}
 TEMPLATES = (
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
@@ -196,9 +200,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #logging settings
-LOG_FILENAME = 'askbot.log'
 logging.basicConfig(
-    filename=os.path.join(os.path.dirname(__file__), 'log', LOG_FILENAME),
+{% if logfile_name != 'stdout' %}
+    filename=os.path.join(os.path.dirname(__file__), 'log', '{{ logfile_name }}'),
+{% endif %}
     level=logging.CRITICAL,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
