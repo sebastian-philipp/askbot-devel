@@ -34,7 +34,7 @@ if db_url:
     DATABASES['default'].update({ 'TEST': {
         'CHARSET': 'utf8',  # Setting the character set and collation to utf-8
     }})
-else
+else:
     DATABASES['default'] = DATABASES.get('askbot', None)
 
 #outgoing mail server settings
@@ -99,7 +99,7 @@ TEMPLATES = (
         'OPTIONS': {
             'environment': 'askbot.skins.jinja2_environment.factory',
             'autoescape': False,
-            'undefined': Undefined
+            'undefined': Undefined,
             'context_processors': ASKBOT_COMMON_CONTEXT_PREPROCESSORS
         },
     },
@@ -108,10 +108,9 @@ TEMPLATES = (
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+            'context_processors':
                 ['django.template.context_processors.request' ] # because DTL
                 + ASKBOT_COMMON_CONTEXT_PREPROCESSORS
-            ]
         }
     },
 )
@@ -226,7 +225,7 @@ AUTHENTICATION_BACKENDS = (
 #logging settings
 LOG_FILENAME = 'askbot.log'
 logging.basicConfig(
-    filename=os.path.join(PROJECT_ROOT, LOG_FILENAME) # os.path.join(os.path.dirname(__file__), 'log', LOG_FILENAME),
+    filename=os.path.join(PROJECT_ROOT, LOG_FILENAME), # os.path.join(os.path.dirname(__file__), 'log', LOG_FILENAME),
     level=logging.CRITICAL,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
