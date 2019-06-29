@@ -83,15 +83,24 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # Make up some unique string, and don't share it with anybody.
 SECRET_KEY = '37c8505c47c1aea8dbe214ba31bce63d'
 
+ASKBOT_COMMON_CONTEXT_PREPROCESSORS = [
+    'askbot.user_messages.context_processors.user_messages',# must be before auth
+    'django.contrib.messages.context_processors.messages', # this  will replace the one above soon
+    'django.contrib.auth.context_processors.auth', # this is required for the admin app
+                                                   # not sure if the admin app even uses jinja2 ...
+    'askbot.deps.group_messaging.context.group_messaging_context'
+]
+
 TEMPLATES = (
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
         'APP_DIRS': True,
-        'DIRS': [], # not sure if I should put templates here. I think it would clash with DjangoTemplates
+        'DIRS': [],
         'OPTIONS': {
             'environment': 'askbot.skins.jinja2_environment.factory',
             'autoescape': False,
             'undefined': Undefined
+            'context_processors': ASKBOT_COMMON_CONTEXT_PREPROCESSORS
         },
     },
     {
@@ -100,9 +109,8 @@ TEMPLATES = (
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.messages.context_processors.messages',
-                'django.contrib.auth.context_processors.auth',
+                ['django.template.context_processors.request' ] # because DTL
+                + ASKBOT_COMMON_CONTEXT_PREPROCESSORS
             ]
         }
     },
