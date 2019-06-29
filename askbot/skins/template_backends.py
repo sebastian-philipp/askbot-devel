@@ -1,4 +1,5 @@
 from django_jinja.base import dict_from_context
+import django.template.backends.jinja2
 from django.template.backends.jinja2 import Template as OriginalJinja2Template
 from django.template.context import BaseContext
 
